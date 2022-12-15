@@ -44,3 +44,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "sidekiq", "~> 7.0"
 
 gem "nokogiri"
+
+gem 'active_model_serializers', '~> 0.10.0'
