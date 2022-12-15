@@ -7,10 +7,10 @@ class HelloController < ApplicationController
     doc = Nokogiri::HTML(html)
     news = doc.css("._evt a")
 
-    response = news.map do |aa|
+    response = news.map do |art|
       {
-        title: aa.text,
-        link: aa.attribute("href").value
+        title: art.text,
+        link: art.attribute("href").value
       }
     end
 
