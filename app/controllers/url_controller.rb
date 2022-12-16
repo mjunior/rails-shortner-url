@@ -1,7 +1,7 @@
 class UrlController < ApplicationController
   def index
-    urls = Url.order(total_access: :desc).limit(100)
-    render json: ActiveModelSerializers::SerializableResource.new(urls, each_serializer: TopAccessedSerializer).as_json
+    serializer = ActiveModelSerializers::SerializableResource
+    render json: serializer.new(Url.top_100, each_serializer: TopAccessedSerializer).as_json
   end
 
   def create
