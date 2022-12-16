@@ -8,7 +8,9 @@ class UrlController < ApplicationController
     short_url = CreateShortUrlService.new(params[:url]).call
 
     url = Url.find_or_create_by(original: params[:url], short: short_url)  
-
+    
+    render json: url, status: 200 and return if url.persisted?
+    
     if url.save
       TitleParserJob.perform_async(url.id)
       render json: url, status: 201
