@@ -7,7 +7,7 @@ class UrlController < ApplicationController
   def create
     short_url = CreateShortUrlService.new(params[:url]).call
 
-    url = Url.find_or_create_by(original: params[:url], short: short_url, total_access: 0)  
+    url = Url.find_or_create_by(original: params[:url], short: short_url)  
 
     if url.save
       TitleParserJob.perform_async(url.id)
