@@ -4,7 +4,7 @@ class UrlRedirectionService
   end
 
   def call
-    url = Url.find_by!(short: @short)
+    url = Url.find_by!(short: "#{Rails.configuration.base_application_domain}#{@short}")
     url.increment!(:total_access)
     url.original
   end

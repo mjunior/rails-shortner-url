@@ -5,7 +5,8 @@ class Url < ApplicationRecord
   validates :original, url: true
 
   after_create do
-    self.short = CreateShortUrlService.new(self.id).call
+    short_url = "#{Rails.configuration.base_application_domain}#{CreateShortUrlService.new(self.id).call}"
+    self.short = short_url
     self.save!
     TitleParserJob.perform_async(self.id)
   end

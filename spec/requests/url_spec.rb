@@ -8,12 +8,12 @@ RSpec.describe "Urls", type: :request do
     
     before { allow(title_job).to receive(:perform_async).and_return(1) }
 
-    it "returns http success" do
+    it "returns short url" do
       allow_any_instance_of(CreateShortUrlService).to receive(:call).and_return("mockShortUrl")
 
       post "/url", params: { url: "https://google.com.br" }
 
-      expect(JSON.parse(response.body)["short"]).to eq("mockShortUrl")
+      expect(JSON.parse(response.body)["short"]).to eq("http://test.com/mockShortUrl")
     end
 
     it "returns error if url is invalid" do
@@ -23,7 +23,7 @@ RSpec.describe "Urls", type: :request do
       expect(JSON.parse(response.body)["url"][0]).to eq("is not an url. It should starts with https:// or http://")
     end
 
-    it "should enque parse title job" do
+    it "should enqueue parse title job" do
       allow_any_instance_of(CreateShortUrlService).to receive(:call).and_return("mockShortUrl")
 
       Sidekiq::Testing.fake! { 
