@@ -8,7 +8,7 @@ class UrlValidator < ActiveModel::EachValidator
       resp = false
     end
     unless resp == true
-      record.errors[attribute] << (options[:message] || "is not an url")
+      record.errors.add(:url, "is not an url. It should starts with https:// or http://")
     end
   end
 end
